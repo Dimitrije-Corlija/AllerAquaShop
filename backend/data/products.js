@@ -1,6 +1,5 @@
 const products = [
   {
-
     name: 'Aller Aqua Classic 2mm',
     image: '/images/AllerAquaClassic2mm.jpg',
     description:
@@ -25,7 +24,6 @@ const products = [
     numReviews: 8,
   },
   {
-
     name: 'Aller Aqua Classic 4mm',
     image: '/images/AllerAquaClassic4mm.jpg',
     description:
@@ -38,7 +36,6 @@ const products = [
     numReviews: 12,
   },
   {
-
     name: 'Aller Aqua Master 4mm',
     image: '/images/AllerAquaMaster4mm.jpg',
     description:
@@ -51,7 +48,6 @@ const products = [
     numReviews: 12,
   },
   {
-    
     name: 'Aller Aqua Master 6mm',
     image: '/images/AllerAquaMaster6mm.jpg',
     description:
@@ -64,7 +60,6 @@ const products = [
     numReviews: 10,
   },
   {
-    
     name: 'Aller Aqua Master 8mm',
     image: '/images/AllerAquaMaster8mm.jpg',
     description:
@@ -77,7 +72,6 @@ const products = [
     numReviews: 12,
   },
   {
-    
     name: 'Aller Aqua Top 3mm',
     image: '/images/AllerAquaTop3mm.jpg',
     description:
@@ -90,7 +84,6 @@ const products = [
     numReviews: 12,
   },
   {
-    
     name: 'Aller Aqua Top 6mm',
     image: '/images/AllerAquaTop6mm.jpg',
     description:

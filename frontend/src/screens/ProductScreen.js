@@ -1,34 +1,50 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
 import Rating from '../components/Rating'
-import axios from 'axios'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import { listProductDetails } from '../actions/productActions'
 
 
 const ProductScreen = () => {
 
+    //const  [qty, setQty] = useState(0);
+/*
+ {product.countInStock > 0 && (
+                        <ListGroup.Item>
+                            <Row>
+                                <Col>Qty</Col>
+                                <Col>
+                                <Form</Col>
+                            </Row>
+                        </ListGroup.Item>
+                    )}
+*/ 
+    const dispatch = useDispatch()
+
+    const productDetails = useSelector((state) => state.productDetails);
+    const {loading, error, product} = productDetails;
+
     let {id} = useParams();
-    const [product, setProduct] = useState({})
+
 
     useEffect(() => {
+        dispatch(listProductDetails(id))
+      }, [dispatch,id])
 
-        const fetchProduct = async () => {
-          const { data } = await axios.get(`/api/products/${id}`)
-
-          setProduct(data)
-        }
-        fetchProduct()
-      }, [])
     return(
     <>
     <Link className='btn btn-light my-3' to='/'>
          Go Back
     </Link>
-    <Row>
-        <Col md={6}>
-            <Image src={product.image} alt={product.name}/>
+    {loading ? <Loader/> : error ? <Message variant='danger'>{error}</Message> : (
+        <Row>
+        <Col md={5} style={{ margin: "0 10px 0 0" }}>
+            <Image src={product.image} alt={product.name} fluid />
         </Col>
-        <Col md={3}>
+        <Col md={3} style={{ margin: "0 60px 0 0" }} >
             <ListGroup variant='flush'>
                 <ListGroup.Item>
                     <h3>{product.name} </h3>
@@ -78,7 +94,8 @@ const ProductScreen = () => {
             </Card>
         </Col>
     </Row>
+    )}
     </>
-    ) 
+    )
 }
 export default ProductScreen
