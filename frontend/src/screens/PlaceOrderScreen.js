@@ -7,10 +7,10 @@ import  CheckoutSteps  from '../components/CheckoutSteps';
 import { createOrder } from '../actions/orderActions'
 
 const PlaceOrderScreen = () => {
-    
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    
+
     const cart = useSelector(state => state.cart)
 
     // Calculate prices
