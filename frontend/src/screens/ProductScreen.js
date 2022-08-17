@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 import Rating from '../components/Rating'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
+import Meta from '../components/Meta';
 import { listProductDetails, createProductReview } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
 
@@ -72,6 +73,7 @@ const ProductScreen = () => {
     </Link>
     {loading ? ( <Loader/> ) : error ? (<Message variant='danger'>{error}</Message> ) : (
         <>
+        <Meta title={product.name}/>
         <Row>
         <Col md={5} style={{ margin: "0 10px 0 0" }}>
             <Image src={product.image} alt={product.name} fluid />
