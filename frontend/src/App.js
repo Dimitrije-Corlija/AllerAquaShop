@@ -20,12 +20,6 @@ import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 
 
-
-
-
-
-
-
 const App = () => {
   return (
     <Router>
@@ -35,7 +29,7 @@ const App = () => {
           <Routes>
             <Route path='/' element={<HomeScreen/>} exact />
             <Route path='/page/:pageNumber' element={<HomeScreen/>}  />
-            <Route path='/search/:keyword/page/:pageNumber' element={<HomeScreen/>} />
+            <Route path='/search/:keyword/page/:pageNumber' element={<HomeScreen/>} exact />
             <Route path='/product/:id' element={<ProductScreen/>}/>
             <Route path='/cart/*' element={<CartScreen/>}/>
             <Route path='/login' element={<LoginScreen/>}/>

@@ -7,8 +7,11 @@ import Rating from '../components/Rating'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import Meta from '../components/Meta';
-import { listProductDetails, createProductReview } from '../actions/productActions'
-import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
+import {
+  listProductDetails,
+  createProductReview,
+} from '../actions/productActions'
+import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
 
 const ProductScreen = () => {
@@ -16,8 +19,8 @@ const ProductScreen = () => {
     const navigate = useNavigate();
 
     const  [qty, setQty] = useState(1);
-    const  [rating, setRating] = useState(0);
-    const  [comment, setComment] = useState("");
+    const [rating, setRating] = useState(0)
+    const [comment, setComment] = useState('')
 
     const dispatch = useDispatch()
 
@@ -26,24 +29,24 @@ const ProductScreen = () => {
 
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
-  
+
     const productReviewCreate = useSelector((state) => state.productReviewCreate)
     const {
-      success: successProductReview,
-      error: errorProductReview,
-    } = productReviewCreate
+    success: successProductReview,
+    error: errorProductReview,
+  } = productReviewCreate
   
 
     let {id} = useParams();
 
 
     useEffect(() => {
-        if (successProductReview) {
-            alert('Product review Submitted!')
-            setRating(0)
-            setComment(" ")
-            dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
-          }
+      if (successProductReview) {
+        alert('Review Submitted!')
+        setRating(0)
+        setComment('')
+        dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
+      }
         dispatch(listProductDetails(id))
       }, [dispatch,id,successProductReview])
 
@@ -75,39 +78,37 @@ const ProductScreen = () => {
         <>
         <Meta title={product.name}/>
         <Row>
-        <Col md={5} style={{ margin: "0 10px 0 0" }}>
-            <Image src={product.image} alt={product.name} fluid />
-        </Col>
-        <Col md={3} style={{ margin: "0 60px 0 0" }} >
+            <Col md={6}>
+              <Image src={product.image} alt={product.name} fluid />
+            </Col>
+            <Col md={3} style={{ margin: "0 60px 0 0" }} >
             <ListGroup variant='flush'>
                 <ListGroup.Item>
                     <h3>{product.name} </h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                    <Rating
-                     value={product.rating}
-                     text={`${product.numReviews} reviews`}
-                     />
+                <Rating
+                    value={product.rating}
+                    text={`${product.numReviews} reviews`}
+                  />
                 </ListGroup.Item>
+                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
                 <ListGroup.Item>
-                    Price: ${product.price}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                    Description: ${product.description}
+                  Description: {product.description}
                 </ListGroup.Item>
             </ListGroup>
-        </Col>
-        <Col md={3}>
-            <Card>
+            </Col>
+            <Col md={3}>
+              <Card>
                 <ListGroup variant='flush'>
-                    <ListGroup.Item>
-                        <Row>
-                            <Col>Price:</Col>
-                            <Col>
-                                <strong>${product.price}</strong>
-                            </Col>
-                        </Row>
-                    </ListGroup.Item>
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Price:</Col>
+                      <Col>
+                        <strong>${product.price}</strong>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
                     <ListGroup.Item>
                         <Row>
                             <Col>Status:</Col>
@@ -117,40 +118,42 @@ const ProductScreen = () => {
                         </Row>
                     </ListGroup.Item>
                     {product.countInStock > 0 && (
-                        <ListGroup.Item>
-                            <Row>
-                                <Col style={{ margin: "auto" }}>Quantity</Col>
-                                <Col>
-                                <Form.Control
-                                 as='select'
-                                 value={qty}
-                                 onChange={(e) => setQty(e.target.value)}
-                                 >
-                                    {[...Array(product.countInStock).keys()].map((x) => (
-                                       <option key={x + 1} value={x + 1}>
-                                       {x + 1}
-                                        </option>
-                                    ))}
-                                </Form.Control>
-                                </Col>
-                            </Row>
-                        </ListGroup.Item>
-                    )}
                     <ListGroup.Item>
-                        <Button
-                            onClick={addToCartHandler}
-                            className='btn-block'
-                            type='button'
-                            disabled={product.countInStock === 0}
-                        >
-                            Add To Cart
-                        </Button>
+                      <Row>
+                        <Col>Qty</Col>
+                        <Col>
+                          <Form.Control
+                            as='select'
+                            value={qty}
+                            onChange={(e) => setQty(e.target.value)}
+                          >
+                            {[...Array(product.countInStock).keys()].map(
+                              (x) => (
+                                <option key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </option>
+                              )
+                            )}
+                          </Form.Control>
+                        </Col>
+                      </Row>
                     </ListGroup.Item>
+                  )}
+                    <ListGroup.Item>
+                    <Button
+                      onClick={addToCartHandler}
+                      className='btn-block'
+                      type='button'
+                      disabled={product.countInStock === 0}
+                    >
+                      Add To Cart
+                    </Button>
+                  </ListGroup.Item>
                 </ListGroup>
-            </Card>
-        </Col>
-    </Row>
-    <Row>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
             <Col md={6}>
               <h2>Reviews</h2>
               {product.reviews.length === 0 && <Message>No Reviews</Message>}
@@ -164,7 +167,7 @@ const ProductScreen = () => {
                   </ListGroup.Item>
                 ))}
                 <ListGroup.Item>
-                <h2>Write a Customer Review</h2>
+                <h2 style={{margin: "0 0 15px 0"}}>Write a Customer Review</h2>
                   {errorProductReview && (
                     <Message variant='danger'>{errorProductReview}</Message>
                   )}
@@ -173,7 +176,7 @@ const ProductScreen = () => {
                       <Form.Group controlId='rating'>
                         <Form.Label>Rating</Form.Label>
                         <Form.Control
-                          as='select'
+                          as="select"
                           value={rating}
                           onChange={(e) => setRating(e.target.value)}
                         >
@@ -185,7 +188,7 @@ const ProductScreen = () => {
                           <option value='5'>5 - Excellent</option>
                         </Form.Control>
                       </Form.Group>
-                      <Form.Group controlId='comment'>
+                      <Form.Group controlId='comment' style={{ margin: "20px 0 20px 0" }}>
                         <Form.Label>Comment</Form.Label>
                         <Form.Control
                           as='textarea'

@@ -23,25 +23,31 @@ import {
     PRODUCT_TOP_FAIL,
 } from '../constants/productConstants'
 
-export const listProducts = (keyword ='', pageNumber = '') => async (dispatch) => {
-    try {
-      dispatch({ type: PRODUCT_LIST_REQUEST })
-      const { data } = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
-      dispatch({
-        type: PRODUCT_LIST_SUCCESS,
-        payload: data,
-      })
-    } catch (error) {
-      dispatch({
-        type: PRODUCT_LIST_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      })
-    }
-  }
 
+export const listProducts = (keyword = '', pageNumber = '') => async (
+  dispatch
+) => {
+  try {
+    dispatch({ type: PRODUCT_LIST_REQUEST })
+
+    const { data } = await axios.get(
+      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+    )
+
+    dispatch({
+      type: PRODUCT_LIST_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
 export const listProductDetails = (id) => async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_DETAILS_REQUEST })
@@ -173,14 +179,14 @@ export const listProductDetails = (id) => async (dispatch) => {
   
       const {
         userLogin: { userInfo },
-      } = getState()
+      } = getState();
   
       const config = {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${userInfo.token}`,
         },
-      }
+      };
   
       await axios.post(
         `/api/products/${id}/reviews`,
@@ -205,8 +211,9 @@ export const listProductDetails = (id) => async (dispatch) => {
   export const listTopProducts = () => async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_TOP_REQUEST })
-
+  
       const { data } = await axios.get(`/api/products/top`)
+  
       dispatch({
         type: PRODUCT_TOP_SUCCESS,
         payload: data,
