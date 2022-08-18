@@ -112,16 +112,11 @@ const createProductReview = asyncHandler(async (req,res) => {
   const { rating, comment } = req.body
 
   const product = await Product.findById(req.params.id)
-  console.log("Product: "+JSON.stringify(rating))
-  console.log("Comment: "+JSON.stringify(comment))
   
   if (product) {
-console.log("userid: "+JSON.stringify(product.user._id))
     const alreadyReviewed = product.reviews.find(
-      (r) => r.user.toString() === req.params.user._id.toString()
+      (r) => r.user.toString() === req.user._id.toString()
     )
-
-    console.log("AR: "+JSON.stringify(alreadyReviewed))
 
     if (alreadyReviewed) {
       res.status(400)
@@ -134,9 +129,9 @@ console.log("userid: "+JSON.stringify(product.user._id))
       comment,
       user: req.user._id,
     }
-    
-    console.log("Product2: "+JSON.stringify(review.rating))
-    console.log("Comment2: "+JSON.stringify(review.comment))
+    console.log("name1 :" + JSON.stringify(req.user.name))
+
+    console.log("name2 :" + JSON.stringify(review.name))
 
     product.reviews.push(review)
 

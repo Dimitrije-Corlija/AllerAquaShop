@@ -8,8 +8,8 @@ const products = [
     category: 'Feed',
     price: 800,
     countInStock: 10,
-    rating: 8,
-    numReviews: 12,
+    rating: 0,
+    numReviews: 0,
   },
   {
     name: 'Aller Aqua Classic 3mm',
@@ -20,8 +20,8 @@ const products = [
     category: 'Feed',
     price: 850,
     countInStock: 7,
-    rating: 4.0,
-    numReviews: 8,
+    rating: 0,
+    numReviews: 0,
   },
   {
     name: 'Aller Aqua Classic 4mm',
@@ -32,8 +32,8 @@ const products = [
     category: 'Feed',
     price: 870,
     countInStock: 5,
-    rating: 3,
-    numReviews: 12,
+    rating: 0,
+    numReviews: 0,
   },
   {
     name: 'Aller Aqua Master 4mm',
@@ -44,8 +44,8 @@ const products = [
     category: 'Feed',
     price: 950,
     countInStock: 11,
-    rating: 5,
-    numReviews: 12,
+    rating: 0,
+    numReviews: 0,
   },
   {
     name: 'Aller Aqua Master 6mm',
@@ -56,8 +56,8 @@ const products = [
     category: 'Feed',
     price: 1000,
     countInStock: 7,
-    rating: 3.5,
-    numReviews: 10,
+    rating: 0,
+    numReviews: 0,
   },
   {
     name: 'Aller Aqua Master 8mm',
@@ -68,8 +68,8 @@ const products = [
     category: 'Feed',
     price: 1000,
     countInStock: 7,
-    rating: 4,
-    numReviews: 12,
+    rating: 0,
+    numReviews: 0,
   },
   {
     name: 'Aller Aqua Top 3mm',
@@ -80,8 +80,8 @@ const products = [
     category: 'Feed',
     price: 1200,
     countInStock: 7,
-    rating: 4,
-    numReviews: 12,
+    rating: 0,
+    numReviews: 0,
   },
   {
     name: 'Aller Aqua Top 6mm',
@@ -92,8 +92,8 @@ const products = [
     category: 'Feed',
     price: 1300,
     countInStock: 7,
-    rating: 4,
-    numReviews: 12,
+    rating: 0,
+    numReviews: 0,
   },
 ]
 
