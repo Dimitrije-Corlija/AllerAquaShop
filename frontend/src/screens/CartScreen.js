@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, Form, Button, Card, ListGroup  } from 'react-bootstrap'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from "../actions/cartActions";
+import { CART_RESET } from '../constants/cartConstants'
 
 const CartScreen = () => {
 
@@ -24,6 +25,7 @@ const CartScreen = () => {
   const { cartItems } = cart;
 
   useEffect(() => {
+    
     if(productId) {
         dispatch(addToCart(productId,qty))
     }
@@ -35,11 +37,15 @@ const CartScreen = () => {
 
   const checkoutHandler = () => {
     navigate("/login?redirect=/shipping");
+  
   };
 
   return(
     <Row>
     <Col md={8}>
+      <Button  type='button' variant='light'>
+        <Link to='/'>Go Back</Link>
+      </Button>
       <h1>Shopping Cart</h1>
       {cartItems.length === 0 ? (
         <Message>

@@ -13,7 +13,7 @@ const orderSchema = mongoose.Schema(
         qty: { type: Number, required: true },
         image: { type: String, required: true },
         price: { type: Number, required: true },
-        product: {
+        product: { 
           type: mongoose.Schema.Types.ObjectId,
           required: true,
           ref: 'Product',
@@ -73,6 +73,11 @@ const orderSchema = mongoose.Schema(
   }
 )
 
+orderSchema.pre("remove", async function (next) {
+  await this.model("paymentModel").deleteOne({ _id: this.payment });
+  next();
+});
+
 const Order = mongoose.model('Order', orderSchema)
 
-export default Order
+export default Order 

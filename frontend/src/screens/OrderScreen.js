@@ -8,6 +8,8 @@ import Message from '../components/Message';
 import  Loader  from '../components/Loader';
 import { getOrderDetails, payOrder, deliverOrder } from '../actions/orderActions'
 import { ORDER_PAY_RESET, ORDER_DELIVER_RESET } from '../constants/orderConstants';
+import StripePayButton from "../components/StripePayButton.js";
+
 
 const OrderScreen = () => {
 
@@ -58,10 +60,9 @@ const OrderScreen = () => {
             };
             document.body.appendChild(script);
           };
-        if (!order || successPay || successDeliver) {
+        if (!order || successPay || successDeliver || order._id !== id) {
             dispatch({ type: ORDER_PAY_RESET })
             dispatch({ type: ORDER_DELIVER_RESET })
-            
             dispatch(getOrderDetails(id))
           } else if (!order.isPaid) {
             if (!window.paypal) {
@@ -70,15 +71,18 @@ const OrderScreen = () => {
               setSdkReady(true)
             }
           }
-      }, [dispatch,id,successPay,successDeliver,order])
+      }, [dispatch,navigate,id,successPay,successDeliver,order,userInfo])
 
       const successPaymentHandler = (paymentResult) => {
         console.log(paymentResult)
         dispatch(payOrder(id, paymentResult))
+        //dispatch('ORDER_PAY_RESET')
+        navigate(`/order/${id}`);
       }
       
       const deliverHandler = () => {
         dispatch(deliverOrder(order))
+        navigate("/admin/orderlist");
       }
 
     return ( loading ? <Loader/> : error ? <Message variant='danger'>{error}</
@@ -149,7 +153,7 @@ const OrderScreen = () => {
             <Col>
                 <Card>
                     <ListGroup variant='flush'>
-                        <ListGroup.Item>
+                        <ListGroup.Item style={{ textAlign: "center" }}>
                             <h2> Order Summary</h2>
                         </ListGroup.Item>
                         <ListGroup.Item>
@@ -176,19 +180,34 @@ const OrderScreen = () => {
                                 <Col>${order.totalPrice}</Col>
                             </Row>
                         </ListGroup.Item>
-                        {!order.isPaid && (
-                <ListGroup.Item>
-                  {loadingPay && <Loader />}
-                  {!sdkReady ? (
-                    <Loader />
-                  ) : (
-                    <PayPalButton
-                      amount={Number(order.totalPrice)}
-                      onSuccess={successPaymentHandler}
-                    />
-                  )}
-                </ListGroup.Item>
-              )}
+                        {order.paymentMethod === "Stripe" && !order.isPaid && (
+                            <ListGroup.Item className="d-grid gap-2">
+                              <StripePayButton order={order} />
+                            </ListGroup.Item>
+                          )}
+                        {order.paymentMethod === "PayPal" && !order.isPaid && (
+                            <ListGroup.Item>
+                              {loadingPay && <Loader />}
+                              {!sdkReady ? (
+                                <Loader />
+                              ) : (
+                                <PayPalButton
+                                 amount={Number(order.totalPrice)}
+                                 onSuccess={successPaymentHandler}
+                                />
+                                    )}
+                            </ListGroup.Item>
+                            )}
+                              {loadingPay && <Loader/>}
+                              {(userInfo) && order.isPaid && ( <ListGroup.Item>
+                                <div className="d-grid gap-2">
+                                <Button    variant="success"  >
+                            
+                                      <Link to='/profile'>Go on Profile</Link>
+                                  
+                                </Button>
+                                </div>
+                                </ListGroup.Item>)}
               {loadingDeliver && <Loader />}
               {userInfo &&
                 userInfo.isAdmin &&

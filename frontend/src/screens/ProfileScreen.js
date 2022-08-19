@@ -7,6 +7,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
+import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
 
 const ProfileScreen = () => {
@@ -38,6 +39,7 @@ const ProfileScreen = () => {
     if (!userInfo) {
       navigate("/login");
     } else {
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
         if (!user.name) {
           dispatch(getUserDetails('profile'))
           dispatch(listMyOrders())

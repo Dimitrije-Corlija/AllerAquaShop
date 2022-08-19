@@ -11,7 +11,11 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 const ProductListScreen = () => {
 
-    const pageNumber = useParams() || 1;
+  let { pageNumber } = useParams();
+
+  if (!pageNumber || typeof pageNumber === "undefined") {
+    pageNumber = 1;
+  }
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
@@ -21,16 +25,16 @@ const ProductListScreen = () => {
     const productDelete = useSelector((state) => state.productDelete)
     const { loading: loadingDelete, error: errorDelete, success: successDelete} = productDelete
 
-    const userLogin = useSelector((state) => state.userLogin)
-    const { userInfo } = userLogin
-
     const productCreate = useSelector((state) => state.productCreate)
     const { loading: loadingCreate, error:errorCreate, success:successCreate, product: createdProduct } = productCreate
    
+    const userLogin = useSelector((state) => state.userLogin)
+    const { userInfo } = userLogin
 
     useEffect(() => {
         dispatch({ type: PRODUCT_CREATE_RESET })
-
+        
+        
         if(!userInfo || !userInfo.isAdmin) {
             navigate('/login')
         }

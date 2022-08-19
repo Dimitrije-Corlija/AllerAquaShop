@@ -97,7 +97,22 @@ const updateOrderToDelivered = asyncHandler(async (req,res) => {
     res.json(updateOrder)
 
  })
+ 
+ const updateOrderToPaidStripe = asyncHandler(async (orderData) => {
+  const order = await orderModel.findById(orderData.orderId);
 
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = Date.now();
+
+    const updatedOrder = await order.save();
+
+    console.log(`UpdatedOrder: ${JSON.stringify(updatedOrder)}`);
+    return;
+  } else {
+    throw new Error("Order not found! Bad request.");
+  }
+});
  
 //@desc Get logged in user orders
 //@route GET /api/orders/myorders
@@ -115,4 +130,4 @@ const getOrders = asyncHandler(async (req, res) => {
     res.json(orders);
   });
 //populate koristimo da bi pristupili useru
-export { addOrderItems, getOrderById, updateOrderToPaid,  getMyOrders,getOrders, updateOrderToDelivered }
+export { addOrderItems, getOrderById, updateOrderToPaid,  getMyOrders,getOrders, updateOrderToDelivered,updateOrderToPaidStripe }

@@ -28,9 +28,9 @@ const ShippingScreen = () => {
 
   return (
     <FormContainer>
-        <CheckoutSteps step1 step2 step3 step4/>
+        <CheckoutSteps   step2 />
         <h1>Shipping</h1>
-        <Form onSubmit={submitHandler}>
+        <Form onSubmit={submitHandler} className="text-center" style={{width: '100%'}}>
         <Form.Group controlId='address'>
                 <Form.Label>Address</Form.Label>
                 <Form.Control
@@ -75,9 +75,11 @@ const ShippingScreen = () => {
                 ></Form.Control>
             </Form.Group>
 
-            <Button type='submit' variant='primary'>
-                Continue
-            </Button>
+            <div style={{ padding: "10px" }}>
+                <Button type='submit' variant='primary'>
+                    Continue
+                </Button>
+            </div>
         </Form>
     </FormContainer>
   )
