@@ -97,9 +97,10 @@ const updateOrderToDelivered = asyncHandler(async (req,res) => {
     res.json(updateOrder)
 
  })
- 
+
  const updateOrderToPaidStripe = asyncHandler(async (orderData) => {
-  const order = await orderModel.findById(orderData.orderId);
+  console.log(`orderData: ${JSON.stringify(orderData)}`)
+  const order = await Order.findById(orderData.orderId);
 
   if (order) {
     order.isPaid = true;
