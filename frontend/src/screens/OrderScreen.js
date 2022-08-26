@@ -83,6 +83,7 @@ const OrderScreen = () => {
       
       const deliverHandler = () => {
         dispatch(deliverOrder(order))
+        setTimeout(() => console.log('Initial timeout!'), 2000);
         navigate("/admin/orderlist");
       }
 
@@ -203,9 +204,7 @@ const OrderScreen = () => {
                               {(userInfo) && order.isPaid && ( <ListGroup.Item>
                                 <div className="d-grid gap-2">
                                 <Button    variant="success"  >
-                            
                                       <Link to='/profile'>Go on Profile</Link>
-                                  
                                 </Button>
                                 </div>
                                 </ListGroup.Item>)}

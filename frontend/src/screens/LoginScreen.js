@@ -72,6 +72,7 @@ const LoginScreen = () => {
             </Col>
         </Row>
     </FormContainer>
+    
 }
 
 export default LoginScreen
