@@ -7,6 +7,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
 
 
@@ -41,6 +42,7 @@ const ProfileScreen = () => {
     } else {
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
         if (!user.name) {
+          dispatch({ type: USER_UPDATE_PROFILE_RESET })
           dispatch(getUserDetails('profile'))
           dispatch(listMyOrders())
         } else {
@@ -134,10 +136,10 @@ const ProfileScreen = () => {
                   <td>{order._id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
                   <td>{order.totalPrice}</td>
-                  <td>{order.isPaid ? order.paidAt.substring(0, 10): (
+                  <td>{order.isPaid ? (order.paidAt.substring(0, 10)) : (
                     <i className='fas fa-times' style={{color:'red'}}></i>
                   )}</td>
-                  <td>{order.idDelivered ? order.deliveredAt.substring(0, 10) : (
+                  <td>{order.isDelivered ? (order.deliveredAt.substring(0, 10)) : (
                     <i className='fas fa-times' style={{color:'red'}}></i>
                   )}</td>
                   <td>

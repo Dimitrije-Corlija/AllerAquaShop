@@ -20,6 +20,7 @@ const OrderListScreen = () => {
 
     useEffect(() => {
         if(userInfo && userInfo.isAdmin) {
+          
             dispatch(listOrders())
         } else {
             navigate('/login')

@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, Form, Button, Card, ListGroup  } from 'react-bootstrap'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from "../actions/cartActions";
-import { CART_RESET } from '../constants/cartConstants'
+import { ORDER_CREATE_RESET } from '../constants/orderConstants'
+import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+
 
 const CartScreen = () => {
 
@@ -22,12 +24,14 @@ const CartScreen = () => {
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const {loading, cartItems } = cart;
 
   useEffect(() => {
-    
+    dispatch({type: ORDER_CREATE_RESET });
+    dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     if(productId) {
         dispatch(addToCart(productId,qty))
+        dispatch({type: ORDER_CREATE_RESET });
     }
   }, [dispatch,productId,qty])
 
@@ -37,7 +41,6 @@ const CartScreen = () => {
 
   const checkoutHandler = () => {
     navigate("/login?redirect=/shipping");
-  
   };
 
   return(
